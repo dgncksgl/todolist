@@ -26,20 +26,22 @@ public class AuthResource {
         this.authService = authService;
     }
 
-    @Operation(summary = "Sign-in", description = "Sign-in")
+    @Operation(summary = "Sign-in", description = "Kullanıcıların username ve password bilgileri kontrol edilerek, uygunluk durumuna göre token üretilen servistir.")
     @PostMapping("/sign-in")
-    public ResponseEntity<AuthResponseDto> singIn(@RequestBody @Valid AuthRequestDto authRequestDto) {
+    public ResponseEntity<AuthResponseDto> authenticateAndGenerateToken(@RequestBody @Valid AuthRequestDto authRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(authService.getAuthResponseDto(authRequestDto));
+                .body(authService.authenticateAndGenerateToken(authRequestDto));
 
     }
 
-    @Operation(summary = "Refresh-Token", description = "Refresh-Token")
+    @Operation(summary = "Refresh-Token", description = "Access token süresi dolan kullancıların refresh token ile tekrar access token üretilen servistir. Refresh token süreside kontrol edilmektedir.")
     @PostMapping("/refresh-token")
-    public ResponseEntity<AuthRefreshTokenResponseDto> refreshToken(@RequestBody @Valid AuthRefreshTokenRequestDto dto) {
+    public ResponseEntity<AuthRefreshTokenResponseDto> regenerateAccessTokenByRefreshToken(
+            @RequestBody @Valid AuthRefreshTokenRequestDto dto
+    ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(authService.getAuthRefreshTokenResponseDto(dto.refreshToken()));
+                .body(authService.regenerateAccessTokenByRefreshToken(dto.refreshToken()));
     }
 }

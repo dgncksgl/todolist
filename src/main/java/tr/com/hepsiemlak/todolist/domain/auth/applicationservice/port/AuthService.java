@@ -6,7 +6,7 @@ import tr.com.hepsiemlak.todolist.domain.auth.applicationservice.dto.AuthRespons
 
 public interface AuthService {
 
-    AuthResponseDto getAuthResponseDto(AuthRequestDto authRequestDto);
+    AuthResponseDto authenticateAndGenerateToken(AuthRequestDto authRequestDto);
 
-    AuthRefreshTokenResponseDto getAuthRefreshTokenResponseDto(String refreshToken);
+    AuthRefreshTokenResponseDto regenerateAccessTokenByRefreshToken(String refreshToken);
 }

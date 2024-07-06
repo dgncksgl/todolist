@@ -48,7 +48,7 @@ public class AuthDomainService implements AuthService {
     }
 
     @Override
-    public AuthResponseDto getAuthResponseDto(AuthRequestDto authRequestDto) {
+    public AuthResponseDto authenticateAndGenerateToken(AuthRequestDto authRequestDto) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDto.username(), authRequestDto.password())
@@ -72,7 +72,7 @@ public class AuthDomainService implements AuthService {
     }
 
     @Override
-    public AuthRefreshTokenResponseDto getAuthRefreshTokenResponseDto(String refreshToken) {
+    public AuthRefreshTokenResponseDto regenerateAccessTokenByRefreshToken(String refreshToken) {
 
         RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new NotFoundException(RefreshToken.class.getSimpleName()));

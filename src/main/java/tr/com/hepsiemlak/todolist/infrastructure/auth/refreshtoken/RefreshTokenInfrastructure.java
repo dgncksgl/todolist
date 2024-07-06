@@ -1,4 +1,4 @@
-package tr.com.hepsiemlak.todolist.infrastructure.refreshtoken;
+package tr.com.hepsiemlak.todolist.infrastructure.auth.refreshtoken;
 
 import org.springframework.stereotype.Component;
 import tr.com.hepsiemlak.todolist.domain.auth.refreshtoken.RefreshToken;

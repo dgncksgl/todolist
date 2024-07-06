@@ -1,4 +1,4 @@
-package tr.com.hepsiemlak.todolist.infrastructure.user;
+package tr.com.hepsiemlak.todolist.infrastructure.auth.user;
 
 import org.springframework.stereotype.Component;
 import tr.com.hepsiemlak.todolist.domain.auth.user.User;
