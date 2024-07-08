@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListItemPriorityGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListCreateDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListUpdateDto;
@@ -248,5 +249,15 @@ class TodoListDomainServiceTest {
                 .thenReturn(Optional.empty());
 
         Assertions.assertThrows(NotFoundException.class, () -> todoListDomainService.doneTodoListItem(ID));
+    }
+
+    @Test
+    void getTodoListItemPriorityList() {
+
+        List<TodoListItemPriorityGetDto> response = todoListDomainService.getTodoListItemPriorityList();
+
+        Assertions.assertNotNull(response);
+        Assertions.assertFalse(response.isEmpty());
+        Assertions.assertEquals(3, response.size());
     }
 }

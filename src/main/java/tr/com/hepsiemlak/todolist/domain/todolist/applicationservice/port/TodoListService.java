@@ -1,5 +1,6 @@
 package tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port;
 
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListItemPriorityGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListCreateDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListUpdateDto;
@@ -19,6 +20,8 @@ public interface TodoListService {
     void delete(String todoListId);
 
     TodoListGetDto doneTodoListItem(String todoListId);
+
+    List<TodoListItemPriorityGetDto> getTodoListItemPriorityList();
 
 }
 

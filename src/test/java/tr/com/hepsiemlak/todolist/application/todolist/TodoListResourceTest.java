@@ -11,6 +11,7 @@ import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.port.UserS
 import tr.com.hepsiemlak.todolist.domain.todolist.*;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListCreateDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListGetDto;
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListItemPriorityGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListUpdateDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port.TodoListService;
 import tr.com.hepsiemlak.todolist.shared.util.JwtTokenUtil;
@@ -239,5 +240,33 @@ class TodoListResourceTest {
         Assertions.assertEquals(2, response.getBody().getTags().size());
         Assertions.assertEquals(2, response.getBody().getAssignedUsers().size());
         Assertions.assertEquals(2, response.getBody().getDocuments().size());
+    }
+
+    @Test
+    void getTodoListItemPriorityList() {
+
+        Mockito.when(todoListService.getTodoListItemPriorityList())
+                .thenReturn(
+                        Arrays.asList(
+                                new TodoListItemPriorityGetDto(
+                                        TodoListItemPriority.LOW.name(),
+                                        TodoListItemPriority.LOW.getLabel()
+                                ),
+                                new TodoListItemPriorityGetDto(
+                                        TodoListItemPriority.MEDIUM.name(),
+                                        TodoListItemPriority.MEDIUM.getLabel()
+                                ),
+                                new TodoListItemPriorityGetDto(
+                                        TodoListItemPriority.HIGH.name(),
+                                        TodoListItemPriority.HIGH.getLabel()
+                                )
+                        )
+                );
+
+        ResponseEntity<List<TodoListItemPriorityGetDto>> response = todoListResource.getTodoListItemPriorityList();
+
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertFalse(response.getBody().isEmpty());
+        Assertions.assertEquals(3, response.getBody().size());
     }
 }

@@ -1,8 +1,7 @@
 package tr.com.hepsiemlak.todolist.domain.todolist;
 
 import org.springframework.stereotype.Service;
-import tr.com.hepsiemlak.todolist.domain.todolist.TodoList;
-import tr.com.hepsiemlak.todolist.domain.todolist.TodolistItemStatus;
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListItemPriorityGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListCreateDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListGetDto;
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.dto.TodoListUpdateDto;
@@ -10,6 +9,7 @@ import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port.TodoLi
 import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port.TodoListService;
 import tr.com.hepsiemlak.todolist.shared.exception.type.NotFoundException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -71,5 +71,12 @@ public class TodoListDomainService implements TodoListService {
         return TodoListGetDto.convertToTodoListGetDtoFromTodoList(
                 todoListRepository.save(todoList.setStatus(TodolistItemStatus.DONE))
         );
+    }
+
+    @Override
+    public List<TodoListItemPriorityGetDto> getTodoListItemPriorityList() {
+        return Arrays.stream(TodoListItemPriority.values())
+                .map(priority -> new TodoListItemPriorityGetDto(priority.name(), priority.getLabel()))
+                .toList();
     }
 }

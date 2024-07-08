@@ -27,7 +27,21 @@ public class AuthResource {
         this.authService = authService;
     }
 
-    @Operation(summary = "Sign-in", description = "Kullanıcıların username ve password bilgileri kontrol edilerek, uygunluk durumuna göre token üretilen servistir.")
+    @Operation(summary = "Sign-in",
+            description = "Kullanıcıların username ve password bilgileri kontrol edilerek, uygunluk durumuna göre token üretilen servistir." +
+                    "<br>" +
+                    "__Service Request Parametreleri__ " +
+                    "<ul>" +
+                    "<li>username: Kullanıcı Giriş Adı</li>" +
+                    "<li>password: Kullanıcı Şifresi</li>" +
+                    "</ul>" +
+                    "__Service Response Parametreleri__" +
+                    "<ul>" +
+                    "<li>username: Kullanıcı Giriş Adı</li>" +
+                    "<li>accessToken: Kullanıcının sisteme giriş yapabilmesi ve diğer servislere istek atabilmesi için gereklidir.</li>" +
+                    "<li>refreshToken: Access Token süresi dolduktan sonra token'ı yenilemek için kullanılır.</li>" +
+                    "<li>tokenType: AccessToken tipini belirtir.</li>" +
+                    "</ul>")
     @PostMapping("/sign-in")
     @Transactional
     public ResponseEntity<AuthResponseDto> authenticateAndGenerateToken(@RequestBody @Valid AuthRequestDto authRequestDto) {
@@ -37,7 +51,19 @@ public class AuthResource {
 
     }
 
-    @Operation(summary = "Refresh-Token", description = "Access token süresi dolan kullancıların refresh token ile tekrar access token üretilen servistir. Refresh token süreside kontrol edilmektedir.")
+    @Operation(summary = "Refresh-Token",
+            description = "Access token süresi dolan kullancıların refresh token ile tekrar access token üretilen servistir. Refresh token süreside kontrol edilmektedir." +
+                    "<br>" +
+                    "__Service Request Parametreleri__ " +
+                    "<ul>" +
+                    "<li>refreshToken: Access Token süresi dolduktan sonra token'ı yenilemek için kullanılır.</li>" +
+                    "</ul>" +
+                    "__Service Response Parametreleri__" +
+                    "<ul>" +
+                    "<li>accessToken: Kullanıcının sisteme giriş yapabilmesi ve diğer servislere istek atabilmesi için gereklidir. refreshToken kontrolü yapılarak yeniden üretilmiştir.</li>" +
+                    "<li>refreshToken: Access Token süresi dolduktan sonra token'ı yenilemek için kullanılır.</li>" +
+                    "<li>tokenType: AccessToken tipini belirtir.</li>" +
+                    "</ul>")
     @PostMapping("/refresh-token")
     @Transactional
     public ResponseEntity<AuthRefreshTokenResponseDto> regenerateAccessTokenByRefreshToken(
