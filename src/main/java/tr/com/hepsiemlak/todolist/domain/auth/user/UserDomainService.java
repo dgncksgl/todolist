@@ -16,7 +16,7 @@ import tr.com.hepsiemlak.todolist.shared.exception.type.NotFoundException;
 import java.util.List;
 
 @Service
-public class UserDomainService implements UserService {
+class UserDomainService implements UserService {
 
     private final UserRepository userRepository;
 
@@ -39,6 +39,20 @@ public class UserDomainService implements UserService {
     }
 
     @Override
+    public UserGetDto getUserByName(String username) {
+        return userRepository.findByUsername(username)
+                .map(UserGetDto::convertToUserGetDtoFromUser)
+                .orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));
+    }
+
+    @Override
+    public void addAdminUser(UserCreateDto userCreateDto) {
+        if (userRepository.findByUsername(userCreateDto.username()).isEmpty()) {
+            userRepository.save(UserCreateDto.convertToUserFromUserCreateDto(userCreateDto));
+        }
+    }
+
+    @Override
     public String addUser(UserCreateDto userCreateDto) {
         if (userRepository.findByUsername(userCreateDto.username()).isPresent()) {
             throw new AlreadyExistException(User.class.getSimpleName());
@@ -53,7 +67,7 @@ public class UserDomainService implements UserService {
             throw new NotFoundException(User.class.getSimpleName());
         }
 
-        if (userRepository.findByIdAndUsername(userUpdateDto.id(), userUpdateDto.username()).isPresent()) {
+        if (userRepository.findByUsernameAndExceptId(userUpdateDto.id(), userUpdateDto.username()).isPresent()) {
             throw new AlreadyExistException(User.class.getSimpleName());
         }
 

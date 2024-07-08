@@ -7,24 +7,31 @@ import tr.com.hepsiemlak.todolist.domain.auth.refreshtoken.applicationservice.po
 import java.util.Optional;
 
 @Component
-public class RefreshTokenInfrastructure implements RefreshTokenRepository {
-    @Override
-    public Optional<RefreshToken> findById(String id) {
-        return Optional.empty();
+class RefreshTokenInfrastructure implements RefreshTokenRepository {
+
+    private final RefreshTokenInfrastructureRepository repository;
+
+    public RefreshTokenInfrastructure(RefreshTokenInfrastructureRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Optional<RefreshToken> findByRefreshToken(String token) {
-        return Optional.empty();
+    public Optional<RefreshToken> findById(String id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public Optional<RefreshToken> findByToken(String token) {
+        return repository.findByToken(token);
     }
 
     @Override
     public RefreshToken save(RefreshToken refreshToken) {
-        return null;
+        return repository.save(refreshToken);
     }
 
     @Override
     public void deleteByUserId(String userId) {
-
+        repository.deleteByUserId(userId);
     }
 }

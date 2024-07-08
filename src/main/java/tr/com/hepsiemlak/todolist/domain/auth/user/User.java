@@ -1,38 +1,47 @@
 package tr.com.hepsiemlak.todolist.domain.auth.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.couchbase.core.mapping.Document;
+import org.springframework.data.couchbase.core.mapping.Field;
 
+import java.util.UUID;
+
+@Document
 public class User {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    @Column(name = "ID", length = 36, nullable = false, updatable = false)
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
-    @Column(name = "USERNAME", nullable = false)
+    @NotNull
+    @Size(min = 2, max = 50)
+    @Field("username")
     private String username;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @NotNull
+    @Size(min = 2)
+    @Field("password")
     private String password;
 
-    @Column(name = "ACTIVE", nullable = false)
+    @NotNull
+    @Field("active")
     private Boolean active;
 
-    @Column(name = "NAME", nullable = false)
+    @NotNull
+    @Size(min = 2, max = 100)
+    @Field("name")
     private String name;
 
-    @Column(name = "SURNAME", nullable = false)
+    @NotNull
+    @Size(min = 2, max = 100)
+    @Field("surname")
     private String surname;
 
-    @Column(name = "GSM")
+    @Field("gsm")
     private String gsm;
 
-    @Column(name = "EMAIL")
+    @Field("email")
     private String email;
 
     public String getId() {

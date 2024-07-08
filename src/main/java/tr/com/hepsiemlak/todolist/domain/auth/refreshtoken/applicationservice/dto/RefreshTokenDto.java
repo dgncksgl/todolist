@@ -63,10 +63,9 @@ public class RefreshTokenDto {
     }
 
     public static RefreshToken convertToRefreshToken(String userId, Long expirationTime) {
-        return new RefreshToken(
-                UUID.randomUUID().toString(),
-                Instant.now().plusMillis(expirationTime),
-                userId
-        );
+        return new RefreshToken()
+                .setToken(UUID.randomUUID().toString())
+                .setExpirationDate(Instant.now().plusMillis(expirationTime))
+                .setUserId(userId);
     }
 }

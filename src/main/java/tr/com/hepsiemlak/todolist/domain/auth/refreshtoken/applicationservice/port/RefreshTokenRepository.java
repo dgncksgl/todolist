@@ -8,7 +8,7 @@ public interface RefreshTokenRepository {
 
     Optional<RefreshToken> findById(String id);
 
-    Optional<RefreshToken> findByRefreshToken(String token);
+    Optional<RefreshToken> findByToken(String token);
 
     RefreshToken save(RefreshToken refreshToken);
 

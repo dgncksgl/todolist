@@ -1,49 +1,64 @@
 package tr.com.hepsiemlak.todolist.domain.auth.refreshtoken;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.couchbase.core.mapping.Document;
+import org.springframework.data.couchbase.core.mapping.Field;
 
 import java.time.Instant;
+import java.util.UUID;
 
+@Document
 public class RefreshToken {
 
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    @Column(name = "ID", length = 36, nullable = false, updatable = false)
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
-    @Column(name = "TOKEN", nullable = false)
+    @NotNull
+    @Field("token")
     private String token;
 
-    @Column(name = "EXPIRATION_DATE", nullable = false)
+    @NotNull
+    @Field("expirationDate")
     private Instant expirationDate;
 
-    @Column(name = "USER_ID", nullable = false)
+    @NotNull
+    @Field("userId")
     private String userId;
-
-    public RefreshToken(String token, Instant expirationDate, String userId) {
-        this.token = token;
-        this.expirationDate = expirationDate;
-        this.userId = userId;
-    }
 
     public String getId() {
         return id;
+    }
+
+    public RefreshToken setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getToken() {
         return token;
     }
 
+    public RefreshToken setToken(String token) {
+        this.token = token;
+        return this;
+    }
+
     public Instant getExpirationDate() {
         return expirationDate;
     }
 
+    public RefreshToken setExpirationDate(Instant expirationDate) {
+        this.expirationDate = expirationDate;
+        return this;
+    }
+
     public String getUserId() {
         return userId;
+    }
+
+    public RefreshToken setUserId(String userId) {
+        this.userId = userId;
+        return this;
     }
 }

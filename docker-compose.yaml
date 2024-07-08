@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  couchbase:
+    image: couchbase:community
+    container_name: couchbase
+    ports:
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "8094:8094"
+      - "11210:11210"
+    environment:
+      COUCHBASE_ADMINISTRATOR_USERNAME: admin
+      COUCHBASE_ADMINISTRATOR_PASSWORD: password
+    volumes:
+      - couchbase_data:/opt/couchbase/var
+    networks:
+      - todolist-network
+
+volumes:
+  couchbase_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: '~/couchbase_data/data'
+
+networks:
+  todolist-network:
+    driver: bridge

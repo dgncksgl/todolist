@@ -11,16 +11,26 @@ import java.util.Set;
 
 class UserCreateDtoTest extends InvalidParametersUtil {
 
+    public static final String ID = "ID";
+
+    public static final String USERNAME = "ADMIN";
+
+    public static final String PASSWORD = "PASSWORD";
+
+    public static final String GSM = "05553331111";
+
+    public static final String EMAIL = "test@test.com";
+
     @Test
     void shouldHaveNoViolations() {
         UserCreateDto dto = new UserCreateDto(
-                "username",
-                "password",
-                true,
-                "name",
-                "surname",
-                "05553331111",
-                "emal@email.com"
+                USERNAME,
+                PASSWORD,
+                Boolean.TRUE,
+                USERNAME,
+                USERNAME,
+                GSM,
+                EMAIL
         );
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);
         Assertions.assertTrue(violations.isEmpty());
@@ -32,12 +42,12 @@ class UserCreateDtoTest extends InvalidParametersUtil {
 
         UserCreateDto dto = new UserCreateDto(
                 value,
-                "password",
-                true,
-                "name",
-                "surname",
-                "05553331111",
-                "emal@email.com"
+                PASSWORD,
+                Boolean.TRUE,
+                USERNAME,
+                USERNAME,
+                GSM,
+                EMAIL
         );
 
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);
@@ -55,13 +65,13 @@ class UserCreateDtoTest extends InvalidParametersUtil {
     void shouldHaveInvalidPassword(String value) {
 
         UserCreateDto dto = new UserCreateDto(
-                "username",
+                USERNAME,
                 value,
-                true,
-                "name",
-                "surname",
-                "05553331111",
-                "emal@email.com"
+                Boolean.TRUE,
+                USERNAME,
+                USERNAME,
+                GSM,
+                EMAIL
         );
 
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);
@@ -77,15 +87,14 @@ class UserCreateDtoTest extends InvalidParametersUtil {
     @Test
     void shouldHaveInvalidActive() {
 
-
         UserCreateDto dto = new UserCreateDto(
-                "username",
-                "password",
+                USERNAME,
+                PASSWORD,
                 null,
-                "name",
-                "surname",
-                "05553331111",
-                "emal@email.com"
+                USERNAME,
+                USERNAME,
+                GSM,
+                EMAIL
         );
 
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);
@@ -103,13 +112,13 @@ class UserCreateDtoTest extends InvalidParametersUtil {
     void shouldHaveInvalidName(String value) {
 
         UserCreateDto dto = new UserCreateDto(
-                "username",
-                "password",
-                true,
+                USERNAME,
+                PASSWORD,
+                Boolean.TRUE,
                 value,
-                "surname",
-                "05553331111",
-                "emal@email.com"
+                USERNAME,
+                GSM,
+                EMAIL
         );
 
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);
@@ -127,13 +136,13 @@ class UserCreateDtoTest extends InvalidParametersUtil {
     void shouldHaveInvalidSurname(String value) {
 
         UserCreateDto dto = new UserCreateDto(
-                "username",
-                "password",
-                true,
-                "name",
+                USERNAME,
+                PASSWORD,
+                Boolean.TRUE,
+                USERNAME,
                 value,
-                "05553331111",
-                "emal@email.com"
+                GSM,
+                EMAIL
         );
 
         Set<ConstraintViolation<UserCreateDto>> violations = validator.validate(dto);

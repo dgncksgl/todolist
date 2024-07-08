@@ -8,35 +8,41 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserInfrastructure implements UserRepository {
+class UserInfrastructure implements UserRepository {
+
+    private final UserInfrastructureRepository repository;
+
+    public UserInfrastructure(UserInfrastructureRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<User> findAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public Optional<User> findById(String userId) {
-        return Optional.empty();
+        return repository.findById(userId);
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return repository.findByUsername(username);
     }
 
     @Override
-    public Optional<User> findByIdAndUsername(String id, String username) {
-        return Optional.empty();
+    public Optional<User> findByUsernameAndExceptId(String id, String username) {
+        return repository.findByUsernameAndExceptId(id, username);
     }
 
     @Override
     public User save(User user) {
-        return null;
+        return repository.save(user);
     }
 
     @Override
     public void delete(User user) {
-
+        repository.delete(user);
     }
 }

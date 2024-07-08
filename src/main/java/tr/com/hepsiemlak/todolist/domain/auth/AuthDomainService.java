@@ -74,7 +74,7 @@ public class AuthDomainService implements AuthService {
     @Override
     public AuthRefreshTokenResponseDto regenerateAccessTokenByRefreshToken(String refreshToken) {
 
-        RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
+        RefreshToken token = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(() -> new NotFoundException(RefreshToken.class.getSimpleName()));
 
         if (token.getExpirationDate().compareTo(Instant.now()) < 0) {
@@ -86,7 +86,7 @@ public class AuthDomainService implements AuthService {
                 .orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));
 
         return AuthRefreshTokenResponseDto.convertToAuthRefreshTokenResponseDto(
-                user.getUsername(),
+                jwtTokenUtil.generateToken(user.getUsername()),
                 token.getToken()
         );
     }

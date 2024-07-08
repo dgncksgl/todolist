@@ -3,6 +3,7 @@ package tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tr.com.hepsiemlak.todolist.domain.auth.user.User;
 
 public record UserCreateDto(
@@ -14,7 +15,6 @@ public record UserCreateDto(
         @NotNull(message = "password should not be null")
         @NotBlank(message = "password should not be blank")
         @Size(min = 2, message = "password should be min 2")
-        @Size(max = 50, message = "password should be max 50")
         String password,
         @NotNull(message = "active should not be null")
         Boolean active,
@@ -35,8 +35,8 @@ public record UserCreateDto(
     public static User convertToUserFromUserCreateDto(UserCreateDto userCreateDto) {
         return new User()
                 .setUsername(userCreateDto.username())
-                .setPassword(userCreateDto.password())
                 .setActive(userCreateDto.active())
+                .setPassword(new BCryptPasswordEncoder().encode(userCreateDto.password()))
                 .setName(userCreateDto.name())
                 .setSurname(userCreateDto.surname())
                 .setGsm(userCreateDto.gsm())

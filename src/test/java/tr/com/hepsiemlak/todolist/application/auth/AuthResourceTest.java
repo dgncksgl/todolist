@@ -47,7 +47,7 @@ class AuthResourceTest {
                         responseDto
                 );
 
-        ResponseEntity<AuthResponseDto> response = authResource.singIn(dto);
+        ResponseEntity<AuthResponseDto> response = authResource.authenticateAndGenerateToken(dto);
         Assertions.assertNotNull(response.getBody());
         Assertions.assertEquals("username", response.getBody().getUsername());
         Assertions.assertEquals("accessToken", response.getBody().getAccessToken());

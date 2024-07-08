@@ -14,7 +14,7 @@ public interface UserRepository {
 
     Optional<User> findByUsername(String username);
 
-    Optional<User> findByIdAndUsername(String id, String username);
+    Optional<User> findByUsernameAndExceptId(String id, String username);
 
     User save(User user);
 
