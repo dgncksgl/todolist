@@ -1,5 +1,21 @@
 version: '3.8'
 services:
+  todolist:
+    image: todolist:v0.0.1
+    container_name: todolist
+    restart: always
+    depends_on:
+      - couchbase
+    environment:
+      - spring.couchbase.connection-string=couchbase://couchbase
+      - spring.couchbase.username=admin
+      - spring.couchbase.password=password
+      - spring.data.couchbase.bucket-name=todolist_bucket
+    networks:
+      - todolist-network
+    ports:
+      - "127.0.0.1:8081:8081"
+
   couchbase:
     image: couchbase:community
     container_name: couchbase

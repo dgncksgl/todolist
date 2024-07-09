@@ -1,4 +1,4 @@
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:3.8.5-openjdk-17 AS builder
 LABEL maintainer="dogancankoseoglu@gmail.com"
 WORKDIR /builder
 ADD . /builder
