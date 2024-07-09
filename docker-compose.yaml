@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   todolist:
-    image: todolist:v0.0.1
+    image: docker0651/todolist:v0.0.1
     container_name: todolist
     restart: always
     depends_on:
