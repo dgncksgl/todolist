@@ -3,18 +3,37 @@
 ## Proje Özeti
 
 * Proje restful web uygulaması olarak geliştirilmiştir.
-* Spring Boot framework'ünde geliştirme yapılmıştır ve Spring Boot versiyonu 3.0.6'dir.
+* Uygulama Spring Boot framework'ünde geliştirilmiştir ve Spring Boot 3.0.6 versiyonu kullanılmıştır.
 * Java 17 kullanılmıştır. Uygulamanın ayağa kalkması için JDK-17'nin kurulu olması gerekmektedir.
 * Verilerin saklanması için Couchbase veritabanı kullanılmıştır.
 * Yazılan restful servislerin açıklamalı biçimde görüntülenmesi ve tetiklenmesi için Swagger kullanılmıştır.
 * Uygulama 8081 portunda çalışmaktadır.
 * IntelliJ IDE'si üzerinde geliştirme yapılmıştır.
 
+## Uygulamanın Ayağa Kaldırılması
+
+**NOTLAR**
+
+**Uygulama IDE üzerinden değilde docker üzerinden ayağa kaldırılacak ise ayağa kaldırılacak makinede Docker Server'ın 
+  kurulu olması gerekmektedir.**
+
+* Proje içeriğinde bulunan Dockerfile dosyası vasıtasıyla, uygulamanın Docker Image'i oluşturulmuştur.
+* Oluşturulan image Docker Hub'a yüklenmiştir. [buradaki link'e tıklayarak](https://hub.docker.com/r/docker0651/todolist)
+  docker image'e erişim sağlanıp görüntüleme yapılabilir.
+* Uygulama içeriğinde bulunan `docker-compose.yaml` dosyasının bulunduğu dizinde `docker-compose up -d` komutu
+  çalıştırılarak uygulama ve uygumanın kullandığı Couchbase server'ın ayağa kaldırılması sağlanabilir.
+* Uygulamalar ayağa kaldırıldıktan sonra [buradaki adrese gidilerek](http://localhost:8091) couchbase içerisinde 
+  `todolist_bucket` adında bucket oluşturulması gerekmektedir.
+* Bir süre sonra uygulama connection sağlayarak sağlıklı şekilde çalışmaya başlayacaktır.
+* Eğer var olan bir couchbase server var ve bu server içerisinde uygun bir bucket var ise docker-compose.yaml dosyası 
+  içerisinde `todolist` tag'i altında bulunan `environment` tag'i altındaki parametreler değiştirilerek istenilen counchbase'e
+  bağlantı sağlanabilir. Bu durumda docker-compose.yaml dosyası içerisindeki couchbase tag'i kaldırılarak
+  `docker-compose up -d` komutu çalıştırılabilir.
+
 ## Servislere erişim
 
 * Uygulama ayağa kalktıktan sonra [buradaki link'e tıklayarak](http://localhost:8081/api/swagger-ui/index.html)
-  swagger'a
-  erişebilirsiniz.
+  swagger'a erişebilirsiniz.
 * Swagger üzerinden incelendiğinde geliştirilen servisler 3 grup altında toplanmıştır. Bunlar;
     * User Services: Kullanıcı CRUD işlemlerinin yapılabileceği servislerdir. Bunlar get, put, post, delete
       işlemleridir. Kullanıcıları listeleyebilir, kaydedebilir, güncelleyebilir ve silebilirsiniz.
@@ -23,7 +42,7 @@
     * Auth Services: Kullanıcıların `Authentication` işlemlemlerinin yapılabileceği servislerdir.
         * `username` ve `password` bilgileri ile `sign-in` servisi üzerinden `authenticate` işlemini gerçekleştirip,
           `accessToken` ve `refresToken` üreterek diğer servislere erişim sağlanabilir.
-        * Üretilen `accessToken` bilgisi diğer servislerin `401` hatası almadan çalışması için swagger'da bulunan 
+        * Üretilen `accessToken` bilgisi, diğer servislerin `401` hatası almadan çalışması için swagger'da bulunan 
           'Authorize' butonuna tıklandıktan sonra çıkan pop-up'ın `value` alanına girilerek `Authorize` butonuna tıklanılmalıdır.
           Bu şekilde token bilgisi diğer servisler içinde kullanılabilir hale gelecektir.
 
@@ -39,8 +58,11 @@
 * Uygulama ayağa kalktığında, bir kullanıcı otomatik insert edilecetir.
   `username:admin` ve `password:admin` kullanıcısı sign-in servisinden accessToken alınabilir.
 * POST `/sign-in/` servislere erişim için authentication işlemlerinin yapıldığı ve token üretilen servistir.
+* `todolist.jwt.secret` parametresi kullanılarak accessToken üretiminde kullanılacak secretKey değeri girilebilir.
+* `todolist.jwt.expiration-time` parametresi kullanılarak accessToken'ın kullanım süresi milisaniye cinsinden verilebilir. 
 * POST `/refresh-token/` accessToken'in kullanım süresi dolduğunda, kullanıcının sign-out olmadan servisleri kullanmaya
   devam etmesi için refresh-token bilgisi üzerinden tekrar accessToken üretilmesini sağlayan servistir.
+* `todolist.jwt.refresh-expiration-time` parametersi kullanılarak refreshToken'ın kullanım süresi milisaniye cinsinden verilebilir. 
 
 ### Kullanıcı İşlemleri Akışı
 
