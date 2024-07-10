@@ -10,4 +10,6 @@ import java.util.List;
 public interface TodoListInfrastructureRepository extends CouchbaseRepository<TodoList, String> {
 
     List<TodoList> findAllByUserId(String userId);
+
+    void deleteAllByUserId(String userId);
 }

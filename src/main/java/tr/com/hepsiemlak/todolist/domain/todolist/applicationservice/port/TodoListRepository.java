@@ -15,5 +15,7 @@ public interface TodoListRepository {
 
     void delete(TodoList todoList);
 
+    void deleteAllByUserId(String userId);
+
 
 }

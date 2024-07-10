@@ -131,4 +131,17 @@ class TodoListInfrastructureTest {
                 .verify(repository, Mockito.times(1))
                 .delete(todoList);
     }
+
+    @Test
+    void deleteAllByUserId() {
+
+        Mockito.doNothing()
+                .when(repository).deleteAllByUserId(USER_ID);
+
+        todoListInfrastructure.deleteAllByUserId(USER_ID);
+
+        Mockito
+                .verify(repository, Mockito.times(1))
+                .deleteAllByUserId(USER_ID);
+    }
 }

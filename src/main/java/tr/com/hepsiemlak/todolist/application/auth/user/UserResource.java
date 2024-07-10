@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserCreateDto;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserGetDto;
@@ -121,6 +122,7 @@ public class UserResource {
     @Operation(summary = "DELETE User", description = "Varolan kullanıcı silmek için kullanılan servistir.")
     @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
         userService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

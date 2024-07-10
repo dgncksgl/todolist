@@ -10,7 +10,9 @@ import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserGe
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserUpdateDto;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.port.UserRepository;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.port.UserService;
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port.TodoListRepository;
 import tr.com.hepsiemlak.todolist.shared.exception.type.AlreadyExistException;
+import tr.com.hepsiemlak.todolist.shared.exception.type.NotDeleteException;
 import tr.com.hepsiemlak.todolist.shared.exception.type.NotFoundException;
 
 import java.util.List;
@@ -20,8 +22,11 @@ class UserDomainService implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserDomainService(UserRepository userRepository) {
+    private final TodoListRepository todoListRepository;
+
+    public UserDomainService(UserRepository userRepository, TodoListRepository todoListRepository) {
         this.userRepository = userRepository;
+        this.todoListRepository = todoListRepository;
     }
 
     @Override
@@ -81,6 +86,11 @@ class UserDomainService implements UserService {
     public void delete(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));
+
+        if (!todoListRepository.findAllByUserId(userId).isEmpty()) {
+            throw new NotDeleteException(User.class.getSimpleName());
+        }
+
         userRepository.delete(user);
     }
 

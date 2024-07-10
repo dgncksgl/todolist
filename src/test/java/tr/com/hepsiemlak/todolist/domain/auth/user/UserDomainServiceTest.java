@@ -10,10 +10,14 @@ import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserCr
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserGetDto;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.dto.UserUpdateDto;
 import tr.com.hepsiemlak.todolist.domain.auth.user.applicationservice.port.UserRepository;
+import tr.com.hepsiemlak.todolist.domain.todolist.TodoList;
+import tr.com.hepsiemlak.todolist.domain.todolist.applicationservice.port.TodoListRepository;
 import tr.com.hepsiemlak.todolist.shared.exception.type.AlreadyExistException;
+import tr.com.hepsiemlak.todolist.shared.exception.type.NotDeleteException;
 import tr.com.hepsiemlak.todolist.shared.exception.type.NotFoundException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +39,8 @@ class UserDomainServiceTest {
 
     UserRepository userRepository;
 
+    TodoListRepository todoListRepository;
+
     User user;
 
     @BeforeEach
@@ -49,7 +55,8 @@ class UserDomainServiceTest {
                 .setGsm(GSM)
                 .setEmail(EMAIL);
         userRepository = Mockito.mock(UserRepository.class);
-        userDomainService = new UserDomainService(userRepository);
+        todoListRepository = Mockito.mock(TodoListRepository.class);
+        userDomainService = new UserDomainService(userRepository, todoListRepository);
     }
 
     @Test
@@ -287,6 +294,9 @@ class UserDomainServiceTest {
         Mockito.when(userRepository.findById(ID))
                 .thenReturn(Optional.of(user));
 
+        Mockito.when(todoListRepository.findAllByUserId(ID))
+                .thenReturn(Collections.emptyList());
+
         Mockito.doNothing().when(userRepository).delete(user);
 
         userDomainService.delete(ID);
@@ -294,6 +304,23 @@ class UserDomainServiceTest {
         Mockito
                 .verify(userRepository, Mockito.times(1))
                 .delete(user);
+    }
+
+    @Test
+    void deleteNotDelete() {
+
+        Mockito.when(userRepository.findById(ID))
+                .thenReturn(Optional.of(user));
+
+        Mockito.when(todoListRepository.findAllByUserId(ID))
+                .thenReturn(
+                        Arrays.asList(
+                                new TodoList(),
+                                new TodoList()
+                        )
+                );
+
+        Assertions.assertThrows(NotDeleteException.class, () -> userDomainService.delete(ID));
     }
 
     @Test

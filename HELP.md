@@ -73,12 +73,15 @@
 * DELETE `/users/{id}` servisi kullanılarak kaydedilen kullanıcı silinebilir.
 * GET `/users/{id}` servisi kullanılarak kaydedilen kullanıcının bilgi detayları görüntülebilir.
 * GET `/users/` servisi kullanılarak kaydedilen kullanıcıların listesi görüntülenebilir.
+* Kullanıcı üzerinde todolist kaydı bulunuyorsa silme işleminde `User is not deleted due to the existence of related data`
+  hatası alınacaktır.
 
 ### TodoList İşlemleri Akışı
 
 * Servis Erişimi başlığı altında anlatılan şekilde AccessToken kullanılarak,
   `TodoList Services` tag'i altında bulunan servisler kullanılabilir.
 * POST `/todo-lists/` servisi kullanılarak yeni todolist kayıtları eklenebilir.
+* todolist kaydı oluşturulurken o onda login olan kullanıcı üzerine kayıt oluşturulmaktadır. 
 * PUT `/todo-lists/` servisi kullanılarak kaydedilen todolist kayıt bilgileri güncellenebilir.
 * DELETE `/todo-lists/{id}` servisi kullanılarak kaydedilen todolist kaydı silinebilir.
 * GET `/todo-lists/{id}` servisi kullanılarak kaydedilen todolist kaydının bilgi detayları görüntülebilir.

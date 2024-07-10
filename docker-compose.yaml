@@ -1,23 +1,23 @@
 version: '3.8'
 services:
-  todolist:
-    image: docker0651/todolist:v0.0.1
-    container_name: todolist
-    restart: always
-    depends_on:
-      - couchbase
-    environment:
-      - spring.couchbase.connection-string=couchbase://couchbase
-      - spring.couchbase.username=admin
-      - spring.couchbase.password=password
-      - spring.data.couchbase.bucket-name=todolist_bucket
-      - todolist.jwt.secret=eaa6f382c40f1b142304425e3a447b32bccec73171c689c69c9481dc61b001b51e09ea95bf675f7f4d91fe717298f6a04cce19ef4aa43e6e6d8b01fb9a2b37fc
-      - todolist.jwt.expiration-time=720000000
-      - todolist.jwt.refresh-expiration-time=720000000
-    networks:
-      - todolist-network
-    ports:
-      - "127.0.0.1:8081:8081"
+#  todolist:
+#    image: docker0651/todolist:v0.0.1
+#    container_name: todolist
+#    restart: always
+#    depends_on:
+#      - couchbase
+#    environment:
+#      - spring.couchbase.connection-string=couchbase://couchbase
+#      - spring.couchbase.username=admin
+#      - spring.couchbase.password=password
+#      - spring.data.couchbase.bucket-name=todolist_bucket
+#      - todolist.jwt.secret=eaa6f382c40f1b142304425e3a447b32bccec73171c689c69c9481dc61b001b51e09ea95bf675f7f4d91fe717298f6a04cce19ef4aa43e6e6d8b01fb9a2b37fc
+#      - todolist.jwt.expiration-time=720000000
+#      - todolist.jwt.refresh-expiration-time=720000000
+#    networks:
+#      - todolist-network
+#    ports:
+#      - "127.0.0.1:8081:8081"
 
   couchbase:
     image: couchbase:community

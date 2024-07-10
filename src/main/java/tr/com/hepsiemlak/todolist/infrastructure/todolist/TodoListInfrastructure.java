@@ -35,4 +35,9 @@ public class TodoListInfrastructure implements TodoListRepository {
     public void delete(TodoList todoList) {
         repository.delete(todoList);
     }
+
+    @Override
+    public void deleteAllByUserId(String userId) {
+        repository.deleteAllByUserId(userId);
+    }
 }
