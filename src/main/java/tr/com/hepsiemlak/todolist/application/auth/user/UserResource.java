@@ -122,7 +122,6 @@ public class UserResource {
     @Operation(summary = "DELETE User", description = "Varolan kullanıcı silmek için kullanılan servistir.")
     @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
         userService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

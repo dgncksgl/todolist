@@ -43,7 +43,6 @@ public class AuthResource {
                     "<li>tokenType: AccessToken tipini belirtir.</li>" +
                     "</ul>")
     @PostMapping("/sign-in")
-    @Transactional
     public ResponseEntity<AuthResponseDto> authenticateAndGenerateToken(@RequestBody @Valid AuthRequestDto authRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -65,7 +64,6 @@ public class AuthResource {
                     "<li>tokenType: AccessToken tipini belirtir.</li>" +
                     "</ul>")
     @PostMapping("/refresh-token")
-    @Transactional
     public ResponseEntity<AuthRefreshTokenResponseDto> regenerateAccessTokenByRefreshToken(
             @RequestBody @Valid AuthRefreshTokenRequestDto dto
     ) {
